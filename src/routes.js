@@ -1,6 +1,13 @@
 import displayBlogs from './components/displayBlogs.vue';
 import addBlog from './components/addBlog.vue';
 export default [
-    {path: '/', component:displayBlogs},
-    {path: '/add', component:addBlog}
+    {
+        path: '/',
+        name: 'display',
+        component:displayBlogs
+    },
+    {
+        path: '/add',
+        name: 'add',
+        component:addBlog}
 ]

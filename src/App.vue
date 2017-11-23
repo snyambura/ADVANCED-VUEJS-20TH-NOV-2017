@@ -1,5 +1,7 @@
 <template>
   <div>
+      <router-link :to="{ name: 'display' }">All Posts</router-link>
+      <router-link :to="{ name: 'add' }">Add New Post</router-link>
       <router-view></router-view>
 
   </div>

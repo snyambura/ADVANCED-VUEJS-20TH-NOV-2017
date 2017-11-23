@@ -75,7 +75,7 @@
                     userId:1,
                 }).then(function(data){
                     console.log(data)
-                    this.submitted=true;
+//                    this.submitted=true;
                 })
 
             }
