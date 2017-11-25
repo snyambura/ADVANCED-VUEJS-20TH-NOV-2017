@@ -5,7 +5,7 @@
             <label>
                 Title
             </label>
-            <input type="text" v-model.lazy="blog.title" required>
+            <input type="text" v-model.lazy="blog.title"  required @input="getTitle">
             <p></p>
             <label>Content</label>
             <textarea v-model.lazy="blog.content"></textarea>
@@ -55,6 +55,8 @@
 
 <script>
     export default {
+        props:['tle'],
+
         data() {
             return {
                 blog: {
@@ -68,6 +70,11 @@
             }
         },
         methods: {
+            getTitle(event){
+                this.blog.title = event.target.value;
+                this.$emit("TitleChanged", this.blog.title)
+            },
+
             post: function() {
                 this.axios.post('https://jsonplaceholder.typicode.com/posts',{
                     title: this.blog.title,

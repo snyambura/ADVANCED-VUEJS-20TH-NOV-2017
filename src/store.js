@@ -1,47 +1,49 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from 'axios'
+
 
 Vue.use(Vuex);
 
 const store= new Vuex.Store({
-    state : {
-        comments: []
+    state: {
+        blogs: {},
+        comment:''
     },
-    actions : {
-        ADD_COMMENT: function({ commit }, new_comment)
-        {
-            var set_new ={
-                comment: new_comment,
-                status:false
-            };
-            commit('ADD_COMMENT_MUTATION', set_new);
-        }
+    actions: {
+        // LOAD_BLOG_LIST ({commit}, blogs) => {
+        //     axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+        //         commit('DISPLAY_BLOGS', response.data.blogs)
+        //     }, (err) => {
+        //         console.log(err)
+        //     })
+        // },
+
+        LOAD_BLOG_LIST : ({commit}) => {
+                //api call using axios
+                axios.get('https://jsonplaceholder.typicode.com/posts')
+                    .then(response => {
+                        commit('DISPLAY_BLOGS', {posts:response.data});
+                        return response.data.blogs  ;
+                    })
+            },
+
+            COMMENT: function ({commit}, blog) {
+                commit('ADD_COMMENT', blog)
+            }
 
     },
-
-    mutations : {
-        ADD_COMMENT_MUTATION: function(state, new_comment)
-        {
-            state.comments.push(new_comment);
-        }
-
-    },
-    getters: {
-        not_done: state => {
-            var filtered = state.comments.filter(function(el)
-            {
-                return el.status === false;
-            });
-            return filtered;
+    mutations: {
+        DISPLAY_BLOGS(state, posts) {
+            state.blogs = posts;
         },
-        done: state => {
-            var filtered = state.comments.filter(function(el)
-            {
-                return el.status === true;
-            });
-            return filtered;
+
+        ADD_COMMENT(state, blog){
+            state.comment= blog;
         }
-    }
+
+        }
+
 });
 
 export default  store;

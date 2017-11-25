@@ -1,15 +1,14 @@
 <template>
     <div id="display-blogs">
         <h2>All Posts</h2>
+        <button @click="view_posts">View Posts</button>
+
         <div v-for="blog in blogs" class="single-post">
             <h3>{{blog.title}}</h3>
             <article>
                 {{blog.body}}
             </article>
-
-            <textarea v-model="holder" placeholder="Add Comment..."></textarea>
-            <br/>
-            <button :disabled="holder==''" @click="add_comment">Add Comment</button>
+            <comment></comment>
         </div>
 
     </div>
@@ -17,29 +16,44 @@
 </template>
 
 <script>
+
+    import addComment from './comment.vue'
+    import {mapState} from 'vuex'
+    import store from '../store.js'
+
     export default {
         data(){
             return{
-                blogs:[],
-                holder:''
+                blogs:{},
+                posts: [],
 
             }
         },
-        methods: {
-            add_comment: function(){
-                this.$store.dispatch('ADD_COMMENT', this.holder);
-                this.holder = '';
-            },
-
+        components : {
+            comment: addComment
         },
-        created(){
-            this.axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-                console.log(response.data)
-                this.blogs = response.data.slice(0.4);
-            })
+//
+        methods: {
+            view_posts() {
+                this.$store.dispatch('LOAD_BLOG_LIST');
+                this.axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+                    console.log(response.data);
+                    this.blogs = response.data;
+                })
+            }
+        },
 
-        }
+//        created(){
+//            this.axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+//                console.log(response.data);
+//                this.blogs = response.data;
+//            })
+//
+//        }
+
+
     }
+
 </script>
 
 <style>

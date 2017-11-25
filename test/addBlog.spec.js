@@ -1,43 +1,32 @@
-require('jsdom-global')();
-
 
 import { mount } from 'vue-test-utils';
-import addBlog from '../src/components/addBlog.vue';
 import expect from 'expect';
+import addBlog from '../src/components/addBlog.vue';
 
-// describe('addBlog', () =>{
-//     // it('logs the posted article', () => {
-//     //     let wrapper = mount(addBlog);
-//     //
-//     //     expect(wrapper.vm.b
-//     // })
-//     it('assertion success', async () => {
-//         let wrapper = mount(addBlog);
-//         const result = await resolvingPromise;
-//         expect(result).to.equal('promise resolved');
-//     });
-// })
+let wrapper;
 
-describe('Mentioner', () => {
-    it('renders the correct message', () => {
-        const vm = new Vue(addBlog).$mount();
-        console.log(vm.$el.textContent);
+beforeEach(() => {
+  wrapper = mount(addBlog);
+});
+
+describe('addBlog', () => {
+    it('assertion success', () => {
+        expect(wrapper.text()).toContain('Add a new post');
+    });
+
+    it('can add title', () => {
+        wrapper.vm.title = 'post title'
+
+        wrapper.find('button').trigger('click')
+        expect(wrapper.vm.title).toContain('post title')
+
     })
-})
+    it('can add content', () => {
+        wrapper.vm.content = 'post content'
 
+        wrapper.find('button').trigger('click')
+        expect(wrapper.vm.content).toContain('post content')
 
-// var MyComponent = {
-//     data: function() {
-//         return {
-//             message: 'hello!'
-//         }
-//     },
-//     template: `<div>{{ message }}</div>`,
-// };
-
-describe('Mentioner', () => {
-    it('renders the correct message', () => {
-        const vm = new Vue(addBlog).$mount();
-        console.log(vm.$el.textContent);
     })
+
 })
