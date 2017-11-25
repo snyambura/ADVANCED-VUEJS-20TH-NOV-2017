@@ -11,13 +11,6 @@ const store= new Vuex.Store({
         comment:''
     },
     actions: {
-        // LOAD_BLOG_LIST ({commit}, blogs) => {
-        //     axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-        //         commit('DISPLAY_BLOGS', response.data.blogs)
-        //     }, (err) => {
-        //         console.log(err)
-        //     })
-        // },
 
         LOAD_BLOG_LIST : ({commit}) => {
                 //api call using axios
